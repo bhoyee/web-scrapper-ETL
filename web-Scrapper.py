@@ -12,3 +12,26 @@ db_password = 'root'
 host = 'localhost'
 port = 5432
 db_name = 'universityDB'
+
+
+# Data Extraction layer
+def extract_data():
+    url = 'https://en.wikipedia.org/wiki/List_of_universities_in_Nigeria'
+    scrapped_data = requests.get(url)
+    scrapped_data = scrapped_data.content
+    soup = BeautifulSoup(scrapped_data, 'lxml')
+    print(type(soup))
+    list_of_rows = []   #[['University of Ibadan', 'Oyo State', 'UI', 1986 ], ['Convenant', 'Ogun', 'CU', 1992 ]]
+    for row in soup.findAll('tr'):
+        list_of_cells = []     #['University of Ibadan', 'Oyo State', 'UI', 1986 ]
+        for cell in row.findAll('td'):
+            #text = cell.text.encode('utf-8')
+            text = cell.text.replace('\n', '')
+            #print(text)
+            list_of_cells.append(text)
+        list_of_rows.append(list_of_cells)
+        
+    
+    wiki_data = pd.DataFrame(list_of_rows[1:], columns= ['University Name', 'State', 'Abbrevation', 'Location', 'Status', 'Year found'])
+    wiki_data.to_csv('data/wikipedia_uni_nigeria_data.csv', index= False)
+    print('Data Successfully written a csv file')
