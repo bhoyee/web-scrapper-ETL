@@ -5,6 +5,9 @@ Goal: This application is to scrap the list of Universities in Nigeria from wiki
 The script will do basic ETL workflow and load the transform data into a local Prosgres DB
 
 
+### - Build us a system to pull data to the database
+### - Refreshed every hour
+
 
 ## Note
 
