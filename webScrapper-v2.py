@@ -28,3 +28,13 @@ def transform_load_to_db():
     engine = create_engine(f'postgresql+psycopg2://{db_user_name}:{db_password}@{host}:{port}/{db_name}')
     data.to_sql('university_england_data_v2', con= engine, if_exists='replace', index= False)
     print('Data successfully written to PostgreSQL database')
+
+
+def main():
+    extract_data()
+    transform_load_to_db()
+
+main()
+
+
+# this is just a simple script
